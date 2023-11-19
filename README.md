@@ -1,6 +1,11 @@
 # connect 4 game
 
-## tech stack
+## Development
+```bash
+python3 app.py
+```
+
+## Tech stack
 - python
 - html/css
 - javascript
