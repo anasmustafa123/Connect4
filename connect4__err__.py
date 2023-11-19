@@ -1,5 +1,5 @@
 import unittest
-from app import Connect4Game
+from connect4 import Connect4Game
 class TestConnect4Game(unittest.TestCase):
     def setUp(self):
         # Initialize the Connect4Game instance for each test
