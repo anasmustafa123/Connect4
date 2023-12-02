@@ -106,31 +106,3 @@ class Connect4Game:
                 if(possibleState != None):
                     possibleMoves.append(possibleState)
         return possibleMoves
-
-""" tempGame = Connect4Game()
-print("isGameFull: "+  str(tempGame.isGameFull()))
-print("player1 Score " + str(tempGame.player1Score))
-tempGame.increaseScore(tempGame.player1sym)
-print("player1 Score " + str(tempGame.player1Score))
-#print("number of 4 connecter"+ str(tempGame.possibleMoves(tempGame.player1sym, tempGame.game)))
-print(tempGame.getHiestEmptyCell(0, tempGame.game))
-tempGame.insertMove(0, tempGame.player1sym)
-tempGame.insertMove(0, tempGame.player1sym)
-tempGame.insertMove(0, tempGame.player1sym)
-print(tempGame.game)
-count = tempGame.possibleMoves(tempGame.player2sym, tempGame.game)
-tempGame.insertMove(1, tempGame.player2sym)
-tempGame.insertMove(3, tempGame.player2sym)
-count2 = tempGame.possibleMoves(tempGame.player1sym, tempGame.game)
-for x in count:
-    print(x)
-    print("")
-for x in count2:
-    print(x)
-    print("") 
-tempGame = Connect4Game()
-tempGame.insertMove(1, tempGame.player2sym)
-tempGame.insertMove(1, tempGame.player2sym)
-tempGame.insertMove(1, tempGame.player2sym)
-tempGame.insertMove(1, tempGame.player2sym)
-print(tempGame.numOf4Connected(tempGame.player2sym))"""
