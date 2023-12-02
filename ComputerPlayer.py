@@ -52,7 +52,7 @@ class ComputerPlayer(Player):
         ##print(depth)
         if(isGameFull(boardState)):
             return numOf4Connected(playerSym, boardState),None
-        if(depth >= 3):
+        if(depth >= 5):
             #print("game is at max depth --> player: " + str(playerSym) + "numofconnected4: "+ str(numOf4Connected(playerSym, boardState)))
             return numOf4Connected(playerSym, boardState),None
         possibleMoves_cols = self.possibleMoves(playerSym, boardState)
@@ -60,5 +60,70 @@ class ComputerPlayer(Player):
             return self.getMax(self.sym, possibleMoves_cols, depth, isPruning,alpha, beta)
         else:
             return self.getMin(self.otherSym, possibleMoves_cols,depth, isPruning, alpha, beta)
+       
             
+    def exp__getMax(self, otherPlayerSym, possibleMoves_cols,depth):
+        # @ returns the maximum possible move
+        #print("depth(max): " + str(depth))
+        maxCol_value = (float('-inf'), None)
+        depth += 1
+        for boardState,col in possibleMoves_cols:
+            if(col == 0):
+                temp_value = max(maxCol_value[0],
+                           0.6 * self.exp__getMove(otherPlayerSym, boardState,depth)[0],
+                           0.4 * self.exp__getMove(otherPlayerSym, possibleMoves_cols[col+1][0],depth)[0]
+                           )
+            elif(col == 6):
+                temp_value = max(maxCol_value[0],
+                           0.4 * self.exp__getMove(otherPlayerSym, possibleMoves_cols[col-1][0],depth)[0],
+                           0.6 * self.exp__getMove(otherPlayerSym, boardState,depth)[0],
+                           )
+            else:
+                temp_value = max(maxCol_value[0],
+                           0.2 * self.exp__getMove(otherPlayerSym, possibleMoves_cols[col-1][0],depth)[0],
+                           0.6 * self.exp__getMove(otherPlayerSym, boardState,depth)[0],
+                           0.2 * self.exp__getMove(otherPlayerSym, possibleMoves_cols[col+1][0],depth)[0])
+            #temp_value = max(maxCol_value[0], self.exp__getMove(otherPlayerSym, boardState,depth)[0])
+            if maxCol_value[0] < temp_value:
+                maxCol_value = temp_value,col
+        return maxCol_value  
 
+
+    def exp__getMin(self, otherPlayerSym, possibleMoves_cols,depth):
+        # @ returns the minimum possible move
+        minCol_value = (float('inf'), None)
+        depth += 1
+        for boardState,col in possibleMoves_cols:
+            if(col == 0):
+                temp_value = min(minCol_value[0],
+                           0.6 * self.exp__getMove(otherPlayerSym, boardState,depth)[0],
+                           0.4 * self.exp__getMove(otherPlayerSym, possibleMoves_cols[col+1][0],depth)[0]
+                           )
+            elif(col == 6):
+                temp_value = min(minCol_value[0],
+                           0.4 * self.exp__getMove(otherPlayerSym, possibleMoves_cols[col-1][0],depth)[0],
+                           0.6 * self.exp__getMove(otherPlayerSym, boardState,depth)[0],
+                           )
+            else:
+                temp_value = min(minCol_value[0],
+                           0.2 * self.exp__getMove(otherPlayerSym, possibleMoves_cols[col-1][0],depth)[0],
+                           0.6 * self.exp__getMove(otherPlayerSym, boardState,depth)[0],
+                           0.2 * self.exp__getMove(otherPlayerSym, possibleMoves_cols[col+1][0],depth)[0]) 
+            if minCol_value[0] > temp_value:
+                minCol_value = temp_value,col
+        #print("col: " + str(col))
+        return minCol_value
+
+    def exp__getMove(self, playerSym, boardState,depth):
+        ##print(depth)
+        if(isGameFull(boardState)):
+            return numOf4Connected(playerSym, boardState),None
+        if(depth >= 3):
+            return numOf4Connected(playerSym, boardState),None
+        possibleMoves_cols = self.possibleMoves(playerSym, boardState)
+        if(playerSym == self.sym):
+            return self.exp__getMax(self.sym, possibleMoves_cols, depth)
+        else:
+            return self.exp__getMin(self.otherSym, possibleMoves_cols,depth)
+            
+    

@@ -1,4 +1,3 @@
-
 def isColFull(col, boardState):
     # Check if a column is full
     return boardState[col][0] != 0
