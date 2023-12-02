@@ -65,16 +65,7 @@ class Connect4Game:
                     if(flag):
                         count += 1
         return count
-    
-    def possibleMoves(self, playerSym, gameState):
-        # return all possible moves
-        temp = []
-        for i in range(self.width):
-            currentState =  copy.deepcopy(gameState)
-            if(currentState[i][0] == -1):
-                temp.append(self.insertMove(i, playerSym, currentState))
-        return temp
-    
+
     def result(self, gameState=None):
         # result the result fo the game
         self.player1Score = self.numOf4Connected(self.player1sym, gameState)
@@ -91,7 +82,8 @@ class Connect4Game:
             row = self.getHiestEmptyCell(col, gameState)
             if row is not None:
                 gameState[col][row] = playerSym
-            return gameState
+                return gameState
+            return None
         else:
             row = self.getHiestEmptyCell(col, self.game)
             if row is not None:
@@ -103,6 +95,17 @@ class Connect4Game:
             if(gameState[col][i] == -1):
                 return i
         return None
+
+    def possibleMoves(self, playerSym, gameState):
+        # return all possible moves
+        possibleMoves = []
+        for i in range(self.width):
+            currentState =  copy.deepcopy(gameState)
+            if(currentState[i][0] == -1):
+                possibleState = self.insertMove(i, playerSym, currentState)
+                if(possibleState != None):
+                    possibleMoves.append(possibleState)
+        return possibleMoves
 
 """ tempGame = Connect4Game()
 print("isGameFull: "+  str(tempGame.isGameFull()))
@@ -124,10 +127,10 @@ for x in count:
     print("")
 for x in count2:
     print(x)
-    print("") """
+    print("") 
 tempGame = Connect4Game()
 tempGame.insertMove(1, tempGame.player2sym)
 tempGame.insertMove(1, tempGame.player2sym)
 tempGame.insertMove(1, tempGame.player2sym)
 tempGame.insertMove(1, tempGame.player2sym)
-print(tempGame.numOf4Connected(tempGame.player2sym))
+print(tempGame.numOf4Connected(tempGame.player2sym))"""
